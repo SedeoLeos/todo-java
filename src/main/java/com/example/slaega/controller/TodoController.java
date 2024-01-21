@@ -5,7 +5,10 @@ import com.example.slaega.model.Todo;
 import com.example.slaega.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,12 +19,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/todo")
 @AllArgsConstructor
+@Slf4j
 public class TodoController {
     private final TodoService service;
     private final ModelMapper modelMapper;
+    private final Logger logger = LoggerFactory.getLogger(TodoController.class);
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Todo create(@Valid  @RequestBody TodoDto todoDto){
+    public Todo create(@RequestBody @Valid TodoDto todoDto){
+        logger.warn("ici ");
+        System.out.println("print");
         Todo todo = modelMapper.map(todoDto, Todo.class);
         return service.create(todo);
     }

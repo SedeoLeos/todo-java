@@ -1,19 +1,29 @@
 package com.example.slaega.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import lombok.Data;
 
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TodoDto {
-    @Valid
+
     @NotEmpty(message="le nom de")
-    @Size(max=50,message = "max")
-    String name;
-    @Valid
+    @NotBlank(message = "Product name cannot be blank")
+    @Length(min = 5, max = 50, message = "Product name must be between 5-512 characters")
+    private String name;
+
     @NotEmpty(message="le nom de")
-    @Size(max=150, message = "max")
-    String description;
+    @Length(min = 5, max = 150, message = "Product name must be between 5-512 characters")
+    private String description;
 }
